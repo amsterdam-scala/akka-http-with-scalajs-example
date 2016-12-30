@@ -1,32 +1,27 @@
 val scalaV = "2.12.1"
 scalaVersion := scalaV
 
-lazy val server = (project in file("app/server")).settings(
-  scalaVersion := scalaV,
-  scalaJSProjects := Seq(client),
-  pipelineStages in Assets := Seq(scalaJSPipeline),
-  // triggers scalaJSPipeline when using compile or continuous compilation
-  compile in Compile <<= (compile in Compile) dependsOn scalaJSPipeline,
-  libraryDependencies ++= Seq(
-    "com.typesafe.akka" %% "akka-http" % "10.0.1",
-    "com.vmunier" %% "scalajs-scripts" % "1.1.0"
-  ),
-  WebKeys.packagePrefix in Assets := "public/",
-  managedClasspath in Runtime += (packageBin in Assets).value
-  // Compile the project before generating Eclipse files, so that generated .scala or .class files for Twirl templates are present
-  //EclipseKeys.preTasks := Seq(compile in Compile)
-).enablePlugins(SbtWeb, SbtTwirl /*, JavaAppPackaging*/).
-  dependsOn(sharedJvm)
-
 lazy val client = (project in file("app/client")).settings(
-  scalaVersion := scalaV,
+  libraryDependencies ++= Seq("org.scala-js" %%% "scalajs-dom" % "0.9.1"),
   persistLauncher := true,
   persistLauncher in Test := false,
+  scalaVersion := scalaV
+).enablePlugins(ScalaJSPlugin, ScalaJSWeb).dependsOn(sharedJs)
+
+lazy val server = (project in file("app/server")).settings(
+  // triggers scalaJSPipeline when using compile or continuous compilation
+  compile in Compile <<= (compile in Compile) dependsOn scalaJSPipeline,
+  // Compile the project before generating Eclipse files, so that generated .scala or .class files for Twirl templates are present
+  //EclipseKeys.preTasks := Seq(compile in Compile)
   libraryDependencies ++= Seq(
-    "org.scala-js" %%% "scalajs-dom" % "0.9.1"
-  )
-).enablePlugins(ScalaJSPlugin, ScalaJSWeb).
-  dependsOn(sharedJs)
+    "com.typesafe.akka" %% "akka-http"       % "10.0.1",
+    "com.vmunier"       %% "scalajs-scripts" % "1.1.0"),
+  managedClasspath in Runtime += (packageBin in Assets).value,
+  pipelineStages in Assets := Seq(scalaJSPipeline),
+  scalaJSProjects := Seq(client),
+  scalaVersion := scalaV,
+  WebKeys.packagePrefix in Assets := "public/"
+  ).enablePlugins(SbtWeb, SbtTwirl /*, JavaAppPackaging*/).dependsOn(sharedJvm)
 
 lazy val shared = (crossProject.crossType(CrossType.Pure) in file("app/shared")).
   settings(scalaVersion := scalaV).

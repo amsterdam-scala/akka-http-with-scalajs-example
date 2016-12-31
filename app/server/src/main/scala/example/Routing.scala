@@ -8,7 +8,7 @@ trait Routing extends Directives {
   val root: Route =
     pathSingleSlash {
       get {
-        complete(example.html.index.render(SharedMessages.itWorks))
+        complete("example.html.index.render(SharedMessages.itWorks)")
       }
     } ~
       pathPrefix("assets" / Remaining) { file =>

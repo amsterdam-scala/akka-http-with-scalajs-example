@@ -10,7 +10,7 @@ lazy val client = (project in file("app/client")).settings(
 
 lazy val server = (project in file("app/server")).settings(
   // triggers scalaJSPipeline when using compile or continuous compilation
-  compile in Compile <<= (compile in Compile) dependsOn scalaJSPipeline,
+  compile in Compile := ((compile in Compile) dependsOn scalaJSPipeline).value,
   // Compile the project before generating Eclipse files, so that generated .scala or .class files for Twirl templates are present
   //EclipseKeys.preTasks := Seq(compile in Compile)
   libraryDependencies ++= Seq(

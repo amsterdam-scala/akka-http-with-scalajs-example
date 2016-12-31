@@ -1,14 +1,14 @@
 package example
 
-import akka.http.scaladsl.server.{Directives, Route}
+import akka.http.scaladsl.server.Directives
+import akka.http.scaladsl.server.Route
 import shared.SharedMessages
 
-class WebService() extends Directives {
-
-  val route: Route = {
+trait Routing extends Directives {
+  val root: Route =
     pathSingleSlash {
       get {
-        complete (example.html.index.render(SharedMessages.itWorks))
+        complete(example.html.index.render(SharedMessages.itWorks))
       }
     } ~
       pathPrefix("assets" / Remaining) { file =>
@@ -18,5 +18,4 @@ class WebService() extends Directives {
           getFromResource("public/" + file)
         }
       }
-  }
 }

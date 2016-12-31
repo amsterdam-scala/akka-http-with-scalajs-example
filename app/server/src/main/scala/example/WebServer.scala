@@ -5,19 +5,14 @@ import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
 
-object WebServer {
-  def main(args: Array[String]) {
-    implicit val system = ActorSystem("server-system")
-    implicit val materializer = ActorMaterializer()
+object WebServer extends App with Routing {
+  implicit val system = ActorSystem()
+  implicit val (executor, materializer) = (system.dispatcher, ActorMaterializer())
 
-    val config = ConfigFactory.load()
-    val interface = config.getString("http.interface")
-    val port = config.getInt("http.port")
+  val config = ConfigFactory.load()
+  val (interface, port) = (config.getString("http.interface"), config.getInt("http.port"))
 
-    val service = new WebService()
+  val bindingFuture = Http().bindAndHandle(root, interface, port)
 
-    Http().bindAndHandle(service.route, interface, port)
-
-    println(s"Server online at http://$interface:$port")
-  }
+  println(s"Server online at http://$interface:$port")
 }

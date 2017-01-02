@@ -1,7 +1,7 @@
 val commonSettings = Seq(
-                  name := "Empty webapp Akka HTTP, react with sbtWebScalajs",
+                  name := "REST webapp Akka HTTP, react as sbtWebScalaJs",
                version := "0.1-SNAPSHOT",
-           description := "Simple example application showing how you can integrate an Akka HTTP project with a Scala.js project",
+           description := "Akka-http REST Web App with react, bootstrap as a sbt-web-scalajs project with webjars",
           organization := "nl.amsscala",
       organizationName := "Amsterdam.scala Meetup Group",
   organizationHomepage := Some(url("http://www.meetup.com/amsterdam-scala/")),
@@ -11,22 +11,22 @@ licenses += "EUPL-1.1" -> url("http://joinup.ec.europa.eu/community/eupl/og_page
 
           scalaVersion := scalaV,
   libraryDependencies ++= Seq(
-  // "com.lihaoyi" %%% "scalatags" % "0.6.2",
      "com.lihaoyi" %%% "autowire" % autowireV,
-     "com.lihaoyi" %%% "upickle" % upickleV
+     "com.lihaoyi" %%% "upickle"  % upickleV
   ))
 
 lazy val akkaHttpV   = "10.0.1"
-lazy val autowireV   = "0.2.6"
+     val autowireV   = "0.2.6"
 lazy val reactV      = "15.4.1"
 lazy val scalaDomV   = "0.9.1"
 lazy val scaJSreactV = "0.11.3"
-lazy val scalaV      = "2.12.1"
-lazy val upickleV    = "0.4.4"
+     val scalaV      = "2.12.1"
+     val upickleV    = "0.4.4"
+lazy val webAppDir   = "WebApp"
 
 scalaVersion := scalaV
 
-lazy val client = (project in file("app/client")).settings(
+lazy val client = (project in file(webAppDir + "/client")).settings(
   commonSettings,
   jsDependencies ++= Seq(
     "org.webjars.bower" % "react" % reactV / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React",
@@ -35,10 +35,10 @@ lazy val client = (project in file("app/client")).settings(
   ),
   libraryDependencies ++= Seq(
     "com.github.japgolly.scalajs-react" %%% "core"        % scaJSreactV,
-    "com.github.japgolly.scalajs-react" %%% "ext-monocle" % scaJSreactV,
-    "com.github.japgolly.scalajs-react" %%% "ext-scalaz72"% scaJSreactV,
-    "com.github.japgolly.scalajs-react" %%% "extra"       % scaJSreactV,
-    "org.scala-js" %%% "scalajs-dom" % scalaDomV
+//  "com.github.japgolly.scalajs-react" %%% "ext-monocle" % scaJSreactV,
+//  "com.github.japgolly.scalajs-react" %%% "ext-scalaz72"% scaJSreactV,
+//  "com.github.japgolly.scalajs-react" %%% "extra"       % scaJSreactV,
+    "org.scala-js"                      %%% "scalajs-dom" % scalaDomV
   ),
   // KEEP THIS normalizedName CONSTANTLY THE SAME, otherwise the outputted JS filename will be changed.
   normalizedName := "main",
@@ -46,7 +46,7 @@ lazy val client = (project in file("app/client")).settings(
   persistLauncher in Test := false
 ).enablePlugins(ScalaJSPlugin, ScalaJSWeb).dependsOn(sharedJs)
 
-lazy val server = (project in file("app/server")).settings(
+lazy val server = (project in file(webAppDir + "/server")).settings(
   // triggers scalaJSPipeline when using compile or continuous compilation
   compile in Compile := ((compile in Compile) dependsOn scalaJSPipeline).value,
   // Compile the project before generating Eclipse files, so that generated .scala or .class files for Twirl templates are present
@@ -58,13 +58,13 @@ lazy val server = (project in file("app/server")).settings(
   pipelineStages in Assets := Seq(scalaJSPipeline),
   scalaJSProjects := Seq(client),
   WebKeys.packagePrefix in Assets := "public/"
-  ).enablePlugins(SbtWeb /*, SbtTwirl , JavaAppPackaging*/).dependsOn(sharedJvm)
+  ).enablePlugins(SbtWeb /*, JavaAppPackaging*/).dependsOn(sharedJvm)
 
-lazy val shared = (crossProject.crossType(CrossType.Pure) in file("app/shared")).
+lazy val shared = (crossProject.crossType(CrossType.Pure) in file(webAppDir + "/shared")).
   settings(commonSettings).jsConfigure(_ enablePlugins ScalaJSWeb)
 
 lazy val sharedJvm = shared.jvm
 lazy val sharedJs = shared.js
 
 // loads the server project at sbt startup
-onLoad in Global := (Command.process("project server", _: State)) // compose (onLoad in Global).value
+onLoad in Global := (Command.process("project server", _: State))

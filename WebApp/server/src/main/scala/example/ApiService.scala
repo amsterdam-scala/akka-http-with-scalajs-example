@@ -1,12 +1,11 @@
-package sr.service
+package example
 
 import java.time.LocalDateTime
 
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import example.Model.TodoItem
-import example.{Api, ServiceContext}
 import upickle.Js
+import upickle.Js.Value
 import upickle.default._
 
 trait ApiService {
@@ -39,7 +38,7 @@ object ApiImpl extends Api {
 }
 
 object AutowireServer extends autowire.Server[Js.Value, Reader, Writer] {
-  def read[Result: Reader](p: Js.Value) = upickle.default.readJs[Result](p)
+  def read[Result: Reader](p: Js.Value): Result = upickle.default.readJs[Result](p)
 
-  def write[Result: Writer](r: Result) = upickle.default.writeJs(r)
+  def write[Result: Writer](r: Result): Value = upickle.default.writeJs(r)
 }

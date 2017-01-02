@@ -1,21 +1,19 @@
 package example
 
-import example.Model.TodoItem
-import japgolly.scalajs.react.ReactComponentC.{ConstProps, ReqProps}
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.ReactTagOf
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom.html.Div
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB, ReactEventI}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object TodoControl {
-  val TodoList: ReqProps[Seq[TodoItem], Unit, Unit, TopNode] =
+  val TodoList =
     ReactComponentB[Seq[TodoItem]]("TodoList").render_P { props =>
       def createItem(item: TodoItem) = <.li(item.view())
+
       <.ul(props map createItem)
     }.build
-  val component: ConstProps[Unit, State, Backend, TopNode] = ReactComponentB[Unit]("TodoControl")
+  val component = ReactComponentB[Unit]("TodoControl")
     .initialState(State(Nil, ""))
     .renderBackend[Backend]
     .componentDidMount(_.backend.load())
@@ -24,7 +22,7 @@ object TodoControl {
   case class State(items: Seq[TodoItem], text: String)
 
   class Backend($: BackendScope[Unit, State]) {
-    def render(state: State): ReactTagOf[Div] =
+    def render(state: State): ReactTagOf[org.scalajs.dom.html.Div] =
       <.div(
         <.h3("TODO"),
         TodoList(state.items),
@@ -34,12 +32,12 @@ object TodoControl {
         )
       )
 
-    def onChange(e: ReactEventI): Callback = {
+    def onChange(e: ReactEventI) = {
       val newValue = e.target.value
       $.modState(_.copy(text = newValue))
     }
 
-    def handleSubmit(e: ReactEventI): Callback = Callback.future {
+    def handleSubmit(e: ReactEventI) = Callback.future {
       e.preventDefault()
       val v = $.state.runNow().text
       AppService.addTodo(v).map(_ => $.modState(s => s.copy(text = ""), load()))
@@ -49,4 +47,5 @@ object TodoControl {
       AppService.allTodos().map(data => $.modState(s => s.copy(items = data)))
     }
   }
+
 }

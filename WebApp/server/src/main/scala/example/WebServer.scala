@@ -1,16 +1,17 @@
 package example
 
+import akka.actor.ActorSystem
+import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCodes}
-import akka.http.scaladsl.server.Directives.pathPrefix
 import akka.http.scaladsl.server.{Directives, Route}
-import sr.service.ApiService
+import akka.stream.ActorMaterializer
 
 trait Routing extends Directives with ApiService with ServiceContext {
   val root: Route =
     get {
       pathSingleSlash {
         redirect("en/index.html", StatusCodes.MovedPermanently)
-    } ~
+      } ~
         path("hello") {
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http!</h1>"))
         } /*just to check */ ~
@@ -24,7 +25,19 @@ trait Routing extends Directives with ApiService with ServiceContext {
           // if the client accepts compressed responses
           encodeResponse(getFromResource("public/" + file))
         }
-    } ~ post {pathPrefix("api") {
-      routeApi
-    }}
+    } ~ post {
+      pathPrefix("api")(routeApi)
+    }
+}
+
+object WebServer extends App with Routing {
+  implicit val system = ActorSystem()
+  implicit val (executor, materializer) = (system.dispatcher, ActorMaterializer())
+
+  val config = com.typesafe.config.ConfigFactory.load()
+  val (interface, port) = (config.getString("http.interface"), config.getInt("http.port"))
+
+  val bindingFuture = Http().bindAndHandle(root, interface, port)
+
+  println(s"Server online at http://$interface:$port")
 }

@@ -1,7 +1,4 @@
-# Akka HTTP with Scala.js
-
-[![License](http://img.shields.io/:license-Apache%202-red.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+# Akka-http REST Web App with react, bootstrap as sbt-web-scalajs project.
 
 This is a simple example application showing how you can integrate an Akka HTTP project with a Scala.js project.
 
@@ -13,13 +10,17 @@ The application contains three directories:
 ## Run the application
 ```shell
 $ sbt
-> ~re-start
-$ open http://0.0.0.0:8080
+sbt (server)> reStart
+[info] Application server not yet started
+[info] Starting application server in the background ...
+server Starting example.WebServer.main()
+[success] Total time: 19 s, completed 2017-01-02T08:15 W1
+sbt (server)> server Server online at http://0.0.0.0:8080
 ```
-
+Use 'reStop' to stop the erver
 ## Features
 
-The application uses the [sbt-web-scalajs](https://github.com/vmunier/sbt-web-scalajs) sbt plugin and the [scalajs-scripts](https://github.com/vmunier/scalajs-scripts) library.
+The application uses the [sbt-web-scalajs](https://github.com/vmunier/sbt-web-scalajs) sbt plugin.
 
 - `compile`, `run`, `re-start` trigger the Scala.js fastOptJS command
 - `~compile`, `~run`, `~re-start` continuous compilation is also available

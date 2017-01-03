@@ -1,32 +1,52 @@
-logs
-project/project
-project/target
-target
-tmp
-.history
-dist
-.idea
-*.iml
-/out
-.idea_modules
-.classpath
-.project
-/RUNNING_PID
-.settings
+# IntelliJ
+.idea/
+*.iws
+/classes/
+/out/
+
+# Log files
+*.log
+
+# Mac
 .DS_Store
 
-# hidden cross project folders
-shared/.js
-shared/.jvm
+# Miscellaneous
+/.metadata/
+/.recommenders/
+/RemoteSystemsTempFiles/
+javascript/node_modules/
 
-# temp files
-.~*
-*~
-*.orig
-
-# eclipse
-.scala_dependencies
-.buildpath
+# sbt specific
+**/target/
 .cache
-.target
+.lib/
+/RUNNING_PID
+dist/*
+lib_managed/
+project/**/project
+project/activator-sbt*
+src_managed/
+
+# Scala worksheets (Eclipse or IntelliJ)
+*.sc
+
+# Eclipse specific
+.cache-main
+.cache-tests
+.classpath
+.project
+.scala_dependencies
+.settings
+.worksheet
 bin/
+
+# ScalaTest
+exportToHTML
+
+# Windows
+desktop.ini
+thumbs.db
+
+# hidden cross project folders
+**/shared/.js
+**/shared/.jvm

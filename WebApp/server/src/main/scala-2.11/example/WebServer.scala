@@ -12,7 +12,7 @@ trait Routing extends Directives with ApiService with ServiceContext {
       pathSingleSlash {
         redirect("en/index.html", StatusCodes.MovedPermanently)
       } ~
-        path("hello") {
+        path("hello") { pathEnd
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http!</h1>"))
         } /*just to check */ ~
         pathPrefix("en" / Remaining) { file =>
@@ -24,6 +24,11 @@ trait Routing extends Directives with ApiService with ServiceContext {
           // optionally compresses the response with Gzip or Deflate
           // if the client accepts compressed responses
           encodeResponse(getFromResource("public/" + file))
+        } ~
+        pathPrefix("img" / Remaining) { file =>
+          // optionally compresses the response with Gzip or Deflate
+          // if the client accepts compressed responses
+          encodeResponse(getFromResource("public/img/" + file))
         }
     } ~ post {
       pathPrefix("api")(routeApi)

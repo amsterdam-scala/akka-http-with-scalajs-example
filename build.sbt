@@ -1,5 +1,5 @@
 val commonSettings = Seq(
-                  name := "REST webapp Akka HTTP, react as sbtWebScalaJs",
+                  name := "REST webapp Akka HTTP, react as sbtweb-ScalaJs",
                version := "0.1-SNAPSHOT",
            description := "Akka-http REST Web App with react, bootstrap as a sbt-web-scalajs project with webjars",
           organization := "nl.amsscala",
@@ -20,7 +20,7 @@ lazy val akkaHttpV   = "10.0.1"
 lazy val reactV      = "15.4.1"
 lazy val scalaDomV   = "0.9.1"
 lazy val scaJSreactV = "0.11.3"
-     val scalaV      = "2.12.1"
+     val scalaV      = "2.11.8"
      val upickleV    = "0.4.4"
 lazy val webAppDir   = "WebApp"
 
@@ -29,12 +29,15 @@ scalaVersion := scalaV
 lazy val client = (project in file(webAppDir + "/client")).settings(
   commonSettings,
   jsDependencies ++= Seq(
+    "org.webjars" % "jquery" % "3.1.1" / "3.1.1/jquery.js",
+    "org.webjars" % "bootstrap" % "3.3.7" / "bootstrap.js" minified "bootstrap.min.js" dependsOn "3.1.1/jquery.js",
     "org.webjars.bower" % "react" % reactV / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React",
     "org.webjars.bower" % "react" % reactV / "react-dom.js" minified "react-dom.min.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM",
     "org.webjars.bower" % "react" % reactV / "react-dom-server.js" minified "react-dom-server.min.js" dependsOn "react-dom.js" commonJSName "ReactDOMServer"
   ),
   libraryDependencies ++= Seq(
     "com.github.japgolly.scalajs-react" %%% "core"        % scaJSreactV,
+//    "com.github.karasiq"                %%% "scalajs-bootstrap" % "1.1.2",
 //  "com.github.japgolly.scalajs-react" %%% "ext-monocle" % scaJSreactV,
 //  "com.github.japgolly.scalajs-react" %%% "ext-scalaz72"% scaJSreactV,
 //  "com.github.japgolly.scalajs-react" %%% "extra"       % scaJSreactV,

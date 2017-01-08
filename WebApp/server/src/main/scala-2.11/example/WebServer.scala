@@ -25,6 +25,11 @@ trait Routing extends Directives with ApiService with ServiceContext {
           // if the client accepts compressed responses
           encodeResponse(getFromResource("public/" + file))
         } ~
+        pathPrefix("css" / """.+\.css$""".r) { file =>
+        // optionally compresses the response with Gzip or Deflate
+        // if the client accepts compressed responses
+        encodeResponse(getFromResource("public/css/" + file))
+      } ~
         pathPrefix("img" / Remaining) { file =>
           // optionally compresses the response with Gzip or Deflate
           // if the client accepts compressed responses

@@ -37,7 +37,7 @@ lazy val client = (project in file(webAppDir + "/client")).settings(
   ),
   libraryDependencies ++= Seq(
     "com.github.japgolly.scalajs-react" %%% "core"        % scaJSreactV,
-//    "com.github.karasiq"                %%% "scalajs-bootstrap" % "1.1.2",
+    "com.github.karasiq"                %%% "scalajs-bootstrap" % "1.1.2",
 //  "com.github.japgolly.scalajs-react" %%% "ext-monocle" % scaJSreactV,
 //  "com.github.japgolly.scalajs-react" %%% "ext-scalaz72"% scaJSreactV,
 //  "com.github.japgolly.scalajs-react" %%% "extra"       % scaJSreactV,

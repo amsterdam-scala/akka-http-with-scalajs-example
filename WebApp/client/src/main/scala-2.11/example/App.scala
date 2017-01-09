@@ -25,7 +25,7 @@ object AppService {
 
   def addTodo(text: String): Future[Unit] = client[Api].addTodo(text).call()
 
-  def allTodos(): Future[Seq[TodoItem]] = client[Api].allTodos().call()
+  def allTodos(): Future[Seq[TodoItem0]] = client[Api].allTodos().call()
 
   class Client(val basePath: String) extends autowire.Client[Js.Value, Reader, Writer] {
     override def doCall(req: Request): Future[Js.Value] = {

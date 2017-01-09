@@ -8,8 +8,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object TodoControl {
   val TodoList =
-    ReactComponentB[Seq[TodoItem]]("TodoList").render_P { props =>
-      def createItem(item: TodoItem) = <.li(item.view())
+    ReactComponentB[Seq[TodoItem0]]("TodoList").render_P { props =>
+      def createItem(item: TodoItem0) = <.li(item.view())
 
       <.ul(props map createItem)
     }.build
@@ -19,7 +19,7 @@ object TodoControl {
     .componentDidMount(_.backend.load())
     .build
 
-  case class State(items: Seq[TodoItem], text: String)
+  case class State(items: Seq[TodoItem0], text: String)
 
   class Backend($: BackendScope[Unit, State]) {
     def render(state: State): ReactTagOf[org.scalajs.dom.html.Div] =

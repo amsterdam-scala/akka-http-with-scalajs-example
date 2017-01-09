@@ -15,21 +15,23 @@ trait Routing extends Directives with ApiService with ServiceContext {
         path("hello") { pathEnd
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http!</h1>"))
         } /*just to check */ ~
-        pathPrefix("en" / Remaining) { file =>
+        pathPrefix("en" / Remaining) {
+          case "todos" => encodeResponse(getFromResource("public/en/todo.html"))
+          case file:String  =>
           // optionally compresses the response with Gzip or Deflate
           // if the client accepts compressed responses
           encodeResponse(getFromResource("public/en/" + file))
+        } ~
+        pathPrefix("css" / """.+\.css$""".r) { file =>
+          // optionally compresses the response with Gzip or Deflate
+          // if the client accepts compressed responses
+          encodeResponse(getFromResource("public/css/" + file))
         } ~
         pathPrefix("js" / """.+\.js$""".r) { file =>
           // optionally compresses the response with Gzip or Deflate
           // if the client accepts compressed responses
           encodeResponse(getFromResource("public/" + file))
         } ~
-        pathPrefix("css" / """.+\.css$""".r) { file =>
-        // optionally compresses the response with Gzip or Deflate
-        // if the client accepts compressed responses
-        encodeResponse(getFromResource("public/css/" + file))
-      } ~
         pathPrefix("img" / Remaining) { file =>
           // optionally compresses the response with Gzip or Deflate
           // if the client accepts compressed responses

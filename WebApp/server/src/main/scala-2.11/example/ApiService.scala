@@ -24,14 +24,14 @@ trait ApiService {
 }
 
 object ApiImpl extends Api {
-  var data: Seq[TodoItem] = Seq.empty
+  var data: Seq[TodoItem0] = Seq.empty
 
   def addTodo(text: String): Unit = {
     println(s"addTodo: $text")
-    data = data :+ TodoItem(text, LocalDateTime.now().toLocalTime.toString)
+    data = data :+ TodoItem0(text, LocalDateTime.now().toLocalTime.toString)
   }
 
-  def allTodos(): Seq[TodoItem] = {
+  def allTodos(): Seq[TodoItem0] = {
     println("allTodos")
     data
   }

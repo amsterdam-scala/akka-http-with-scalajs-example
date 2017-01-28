@@ -1,7 +1,5 @@
 package example
 
-import java.time.LocalDateTime
-
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import upickle.Js
@@ -16,6 +14,7 @@ trait ApiService {
         complete {
           AutowireServer.route[Api](ApiImpl)(
             autowire.Core.Request(s, upickle.json.read(e).asInstanceOf[Js.Obj].value.toMap)
+            // autowire.Core.Request(s, upickle.default.read[Map[String, String]](e).asInstanceOf[Js.Obj].value.toMap)
           ).map(upickle.json.write(_, 0))
         }
       }
@@ -24,17 +23,30 @@ trait ApiService {
 }
 
 object ApiImpl extends Api {
-  var data: Seq[TodoItem0] = Seq.empty
+  private var data: Seq[Task] =
+    for (ch <- 'A' to 'C') yield Task(s"TodoMVC Task $ch", false)
 
-  def addTodo(text: String): Unit = {
-    println(s"addTodo: $text")
-    data = data :+ TodoItem0(text, LocalDateTime.now().toLocalTime.toString)
-  }
+  def allTodo(): Seq[Task] = data
 
-  def allTodos(): Seq[TodoItem0] = {
-    println("allTodos")
-    data
-  }
+  def createTodo(taskWithoutId: String): Seq[Task] = Nil
+
+  def update(task: Task): Task = ???
+
+  def delete(ids: String): Seq[Task] = Nil
+
+
+  def clearCompletedTasks(): Seq[Task] = Nil
+
+
+  /*  def addTodo(text: String): Unit = {
+      println(s"addTodo: $text")
+      data = data :+ TodoItem0(text, LocalDateTime.now().toLocalTime.toString)
+    }
+
+    def allTodos(): Seq[TodoItem0] = {
+      println("allTodos")
+      data
+    }*/
 }
 
 object AutowireServer extends autowire.Server[Js.Value, Reader, Writer] {

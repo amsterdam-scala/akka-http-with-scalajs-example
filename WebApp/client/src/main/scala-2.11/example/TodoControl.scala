@@ -44,7 +44,7 @@ object TodoControl {
     }
 
     def load(): Callback = Callback.future {
-      AppService.allTodos().map(data => $.modState(s => s.copy(items = data)))
+      AppService.allTodos().map(data => $.modState(s => s.copy(text = "") /*s.copy(items = data)*/))
     }
   }
 

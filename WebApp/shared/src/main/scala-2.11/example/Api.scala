@@ -20,4 +20,6 @@ trait Api {
 
 case class Task(txt: String, done: Boolean)
 
-case class Task0(txt: Var[String], done: Var[Boolean])
+case class Task0(id: Option[Long] = None, txt: String, done: Boolean)
+
+//case class Task0(txt: Var[String], done: Var[Boolean])

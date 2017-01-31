@@ -2,19 +2,21 @@ package example
 
 import org.scalajs.dom.html.Element
 import org.scalajs.jquery.jQuery
-import rx._
+import rx.{Rx, _}
 
 import scala.scalajs.js.annotation.JSExport
 import scalatags.JsDom.all._
 import scalatags.JsDom.tags2.section
 
 trait Model {
+  import Ctx.Owner.Unsafe._
+
   val tasks = Var(Seq(
     Task0(None, "Todo MVC Task A", false),
-    Task0(None, "Todo MVC Task B", false),
+    Task0(None, "Todo MVC Task B", true),
     Task0(None, "Todo MVC Task C", false)
   ))
-  val done = tasks.now.count(_.done)
+  val done = Rx {tasks().count(_.done)}
   val editing: Var[Option[Task0]] = Var(None)
   val filter = Var("All")
   val filters: Map[String, (Task0) => Boolean] = Map[String, Task0 => Boolean](
@@ -27,7 +29,7 @@ trait Model {
 
   def delete(task: Task0)(implicit ctx: Ctx.Data) = tasks() = tasks().filter(_ != task)
 
-  def notDone = tasks.now.length - done
+  def notDone = Rx {tasks().size - done()}
 
   def create(desc: String) = tasks() = Task0(None, desc, false) +: tasks.now
 }
@@ -86,9 +88,7 @@ object TodoJS extends Model {
                   `class` := "toggle",
                   `type` := "checkbox",
                   cursor := "pointer",
-                  onchange := { () => {
-                    /*task = !task.done*/
-                  }
+                  onchange := { () => {/*task = !task.done*/}
                   },
                   if (task.done) checked := true
                 ),

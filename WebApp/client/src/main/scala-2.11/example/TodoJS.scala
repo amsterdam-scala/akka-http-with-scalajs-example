@@ -1,9 +1,9 @@
 package example
 
-import org.scalajs.dom.html.Element
 import org.scalajs.jquery.jQuery
-import rx.{Rx, _}
+import rx.{Ctx, Rx, Var}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.annotation.JSExport
 import scalatags.JsDom.all._
 import scalatags.JsDom.tags2.section
@@ -11,25 +11,19 @@ import scalatags.JsDom.tags2.section
 trait Model {
   import Ctx.Owner.Unsafe._
 
-  val tasks = Var(Seq(
-    Task0(None, "Todo MVC Task A", false),
-    Task0(None, "Todo MVC Task B", true),
-    Task0(None, "Todo MVC Task C", false)
-  ))
+  val tasks = Var(Seq[Task0]())
   val done = Rx {tasks().count(_.done)}
   val editing: Var[Option[Task0]] = Var(None)
   val filter = Var("All")
-  val filters: Map[String, (Task0) => Boolean] = Map[String, Task0 => Boolean](
-    ("All", t => true),
-    ("Active", !_.done),
-    ("Completed", _.done)
-  )
+  val filters = Map[String, Task0 => Boolean](("All", t => true), ("Active", !_.done), ("Completed", _.done))
 
   def clearCompletedTasks = ???
 
   def delete(task: Task0)(implicit ctx: Ctx.Data) = tasks() = tasks().filter(_ != task)
 
-  def notDone = Rx {tasks().size - done()}
+  def notDone = Rx {
+    tasks().size - done()
+  }
 
   def create(desc: String) = tasks() = Task0(None, desc, false) +: tasks.now
 }
@@ -123,7 +117,7 @@ object TodoJS extends Model {
               },
               name,
               href := "#",
-              onclick := { () => filter() = name}
+              onclick := { () => filter() = name }
             ))
         ),
         button(
@@ -151,12 +145,11 @@ object TodoJS extends Model {
     }
 
 
-    val component: Element = section(id := "todoapp",
+    AppService.allTodos.map(r => tasks() = r.toSeq)
+    jQuery("body").append(section(id := "todoapp",
       templateHeader,
       templateBody,
       templateFooter
-    ).render
-
-    jQuery("body").append(component)
+    ).render)
   }
 }

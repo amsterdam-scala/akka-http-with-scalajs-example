@@ -27,6 +27,7 @@ object ApiImpl extends Api {
     for (ch <- 'A' to 'C') yield Task(s"TodoMVC Task $ch", false)
 
   def allTodo(): Seq[Task] = data
+  def allTodo0(): Seq[Task0] = Api.tasks00
 
   def createTodo(taskWithoutId: String): Seq[Task] = Nil
 

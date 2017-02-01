@@ -24,7 +24,7 @@ object AppService {
 
   def addTodo(taskWithoutId: String): Future[Iterable[Task]] = client[Api].createTodo(taskWithoutId).call()
 
-  def allTodos(): Future[Iterable[Task]] = client[Api].allTodo().call()
+  def allTodos(): Future[Iterable[Task0]] = client[Api].allTodo0().call()
 
   class Client(val basePath: String) extends autowire.Client[Js.Value, Reader, Writer] {
      def doCall(req: Request): Future[Js.Value] = dom.ext.Ajax.post(

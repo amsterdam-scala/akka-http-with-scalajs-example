@@ -25,7 +25,7 @@ trait Model {
     tasks().size - done()
   }
 
-  def create(desc: String) = tasks() = Task0(None, desc, false) +: tasks.now
+  def create(desc: Task0) = tasks() = desc +: tasks.now
 }
 
 @JSExport
@@ -55,8 +55,7 @@ object TodoJS extends Model {
       form(
         inputBox,
         onsubmit := { () =>
-          AppService.addTodo(inputBox.value)
-          create(inputBox.value)
+          App.addTodo(inputBox.value).map(create(_))
           inputBox.value = ""
           false
         }
@@ -145,7 +144,7 @@ object TodoJS extends Model {
     }
 
 
-    AppService.allTodos.map(r => tasks() = r.toSeq)
+    App.allTodos().map(r => tasks() = r.toSeq)
     jQuery("body").append(section(id := "todoapp",
       templateHeader,
       templateBody,

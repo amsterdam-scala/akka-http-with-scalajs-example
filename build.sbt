@@ -16,7 +16,7 @@ licenses += "EUPL-1.1" -> url("http://joinup.ec.europa.eu/community/eupl/og_page
      "com.lihaoyi" %%% "upickle"  % upickleV
 ))
 
-lazy val akkaHttpV   = "10.0.1"
+lazy val akkaHttpV   = "10.0.3"
      val autowireV   = "0.2.6"
 lazy val reactV      = "15.4.2"
 lazy val scaJSreactV = "0.11.3"
@@ -26,6 +26,8 @@ lazy val scalaDomV   = "0.9.1"
 lazy val webAppDir   = "WebApp"
 
 scalaVersion := scalaV
+
+scalacOptions in ThisBuild ++= Seq("-deprecation", "-feature", "-unchecked")
 
 lazy val client = (project in file(webAppDir + "/client")).settings(
   commonSettings,

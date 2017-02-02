@@ -1,8 +1,9 @@
 package example
 
 import org.scalajs.dom
-import rx._
+import rx.{Ctx, Rx}
 
+import scala.language.implicitConversions
 import scala.util.{Failure, Success}
 import scalatags.JsDom.all._
 
@@ -35,7 +36,9 @@ object Framework {
     var last = rSafe
     r.trigger {
       val newLast = rSafe
-      Option(last.parentElement).foreach {_.replaceChild(newLast, last)}
+      Option(last.parentElement).foreach {
+        _.replaceChild(newLast, last)
+      }
       last = newLast
     }
     bindNode(last)

@@ -23,20 +23,19 @@ trait ApiService {
 }
 
 object ApiImpl extends Api {
-  private var data: Seq[Task] =
-    for (ch <- 'A' to 'C') yield Task(s"TodoMVC Task $ch", false)
 
-  def allTodo(): Seq[Task] = data
-  def allTodo0(): Seq[Task0] = Api.tasks00
+  def allTodo0(): Seq[Task0] = TaskStore.selectAll
 
-  def createTodo(taskWithoutId: String): Seq[Task] = Nil
+  def createTodo(task0: Task0): Task0 = {
+    println(task0)
+    task0}
 
-  def update(task: Task): Task = ???
+  def update(task: Task0): Task0 = ???
 
-  def delete(ids: String): Seq[Task] = Nil
+  def delete(ids: String): Seq[Task0] = Nil
 
 
-  def clearCompletedTasks(): Seq[Task] = Nil
+  def clearCompletedTasks(): Seq[Task0] = Nil
 
 
   /*  def addTodo(text: String): Unit = {

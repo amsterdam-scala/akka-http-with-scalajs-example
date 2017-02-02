@@ -15,14 +15,12 @@ object App extends JSApp {
     * Main entry point
     */
   def main(): Unit = {
-    ReactDOM.render(TodoControl.component(), dom.document.getElementById("root"))
   }
-}
 
-object AppService {
   val client = new Client(dom.document.location.origin.toOption.getOrElse(""))
 
-  def addTodo(taskWithoutId: String): Future[Iterable[Task]] = client[Api].createTodo(taskWithoutId).call()
+  def addTodo(taskWithoutId: String): Future[Task0] =
+    client[Api].createTodo(Task0(None, taskWithoutId, done = false)).call()
 
   def allTodos(): Future[Iterable[Task0]] = client[Api].allTodo0().call()
 

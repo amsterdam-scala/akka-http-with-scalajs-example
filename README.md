@@ -1,4 +1,4 @@
-# Akka-http REST Web App with react, bootstrap as sbt-web-scalajs project.
+# Akka-http RESTless Web App with react, bootstrap as sbt-web-scalajs project.
 
 This is a simple example application showing how you can integrate an Akka HTTP project with a Scala.js project.
 

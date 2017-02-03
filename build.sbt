@@ -1,7 +1,7 @@
 val commonSettings = Seq(
-                  name := "REST webapp Akka HTTP, react as sbtweb-ScalaJs",
+                  name := "RESTless webapp Akka HTTP, react as sbtweb-ScalaJs",
                version := "0.1-SNAPSHOT",
-           description := "Akka-http REST Web App with react, bootstrap as a sbt-web-scalajs project with webjars",
+           description := "Akka-http RESTless Web App with react, bootstrap as a sbt-web-scalajs project with webjars",
           organization := "nl.amsscala",
       organizationName := "Amsterdam.scala Meetup Group",
   organizationHomepage := Some(url("http://www.meetup.com/amsterdam-scala/")),

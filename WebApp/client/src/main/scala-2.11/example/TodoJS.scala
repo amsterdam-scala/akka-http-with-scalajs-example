@@ -20,6 +20,10 @@ trait Model {
 
   def clearCompletedTasks = ???
 
+  def update(oldTask : Task0, newTask : Task0)(implicit ctx: Ctx.Data) = {
+    tasks() = newTask +: tasks().filter(_ != oldTask)
+  }
+
   def delete(task: Task0)(implicit ctx: Ctx.Data): Unit = tasks() = tasks().filter(_ != task)
 
   def init(tsks: Iterable[Task0]): Unit = tasks() = tsks.toSeq
@@ -64,12 +68,11 @@ object TodoJS extends Model {
     def templateBody(implicit ctx: Ctx.Owner) = {
       def partList = Rx {
         ul(id := "todo-list")(
-          for (task <- tasks()
-               if filters(filter())(task)) yield {
+          for (task <- tasks() if filters(filter())(task)) yield {
             val inputRef = input(`class` := "edit", value := task.txt).render
 
             li(
-              `class` := Rx {if (task.done) "completed" else if (editing().contains(task)) "editing" else ""},
+              `class` := Rx {if (task.done) "completed" else if (editing().isDefined) "editing" else ""},
               div(`class` := "view")(
                 ondblclick := { () =>
                   editing() = Some(task)
@@ -84,24 +87,23 @@ object TodoJS extends Model {
                   },
                   if (task.done) checked := true
                 ),
-                label(task.txt,
+                label(task.txt),
                   button(
                     `class` := "destroy",
                     cursor := "pointer",
-                    onclick := { () => App.remTodo(task).map(delete) }
+                    onclick := { () => App.remTodo(task).map(delete)}
                   )
                 ),
                 form(
                   onsubmit := { () =>
-                    task.copy(txt = inputRef.value)
-
-                    //task.txt = inputRef.value
+                    {task.copy(txt = inputRef.value)
+                    App.updTodo(task, task.copy(txt = inputRef.value)).map(r => update(task, r))
                     editing() = None
-                    false
+                    false}
                   },
                   inputRef
                 )
-              ))
+              )
           }
         )
       }

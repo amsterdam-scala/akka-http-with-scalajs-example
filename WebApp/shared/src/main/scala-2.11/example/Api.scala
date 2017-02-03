@@ -6,7 +6,7 @@ trait Api {
 
   def createTodo(taskWithoutId: Task0): Task0
 
-  def update(task: Task): Task
+  def updateTodo(oldTask: Task0, newTask: Task0): Task0
 
   def deleteTodo(itemToDelete: Task0): Task0
 

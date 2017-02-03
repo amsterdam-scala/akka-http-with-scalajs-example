@@ -50,8 +50,8 @@ body {
 }
 
 /* Sidebar navigation */
-.nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
+/*.nav-sidebar {
+  margin-right: -21px; *//* 20px padding + 1px border *//*
   margin-bottom: 20px;
   margin-left: -20px;
 }
@@ -64,13 +64,14 @@ body {
 .nav-sidebar > .active > a:focus {
   color: #fff;
   background-color: #428bca;
-}
+}*/
 
 
 /*
  * Main content
  */
 
+/*
 .main {
   padding: 20px;
 }
@@ -83,12 +84,14 @@ body {
 .main .page-header {
   margin-top: 0;
 }
+*/
 
 
 /*
  * Placeholder dashboard ideas
  */
 
+/*
 .placeholders {
   margin-bottom: 30px;
   text-align: center;
@@ -108,4 +111,4 @@ body {
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
-}
+}*/

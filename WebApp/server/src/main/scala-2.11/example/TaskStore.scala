@@ -10,6 +10,13 @@ object TaskStore {
     ret
   }
 
+  def update(oldTask: Task0, newTask: Task0)= {
+    atomicSCN
+    selectAll -= oldTask
+    selectAll += newTask
+    newTask
+  }
+
   @inline
   def atomicSCN(): Long = {
     this.synchronized {

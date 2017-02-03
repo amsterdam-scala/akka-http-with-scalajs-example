@@ -21,6 +21,8 @@ object App extends JSApp {
   def addTodo(taskWithoutId: String): Future[Task0] =
     client[Api].createTodo(Task0(None, taskWithoutId, done = false)).call()
 
+  def updTodo(oldTask: Task0, newTask: Task0) = client[Api].updateTodo(oldTask, newTask).call()
+
   def remTodo(task : Task0): Future[Task0] = client[Api].deleteTodo(task).call()
 
   def allTodos(): Future[Iterable[Task0]] = client[Api].allTodo0().call()

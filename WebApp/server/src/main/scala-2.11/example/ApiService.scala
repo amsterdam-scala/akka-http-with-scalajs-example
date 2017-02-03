@@ -28,7 +28,7 @@ object ApiImpl extends Api {
 
   def createTodo(taskWithoutId: Task0): Task0 = TaskStore.create(taskWithoutId)
 
-  def update(task: Task0): Task0 = ???
+  def updateTodo(oldTask: Task0, newTask: Task0): Task0 = TaskStore.update(oldTask, newTask)
 
   def deleteTodo(itemToDelete: Task0): Task0 = TaskStore.delete(itemToDelete)
 

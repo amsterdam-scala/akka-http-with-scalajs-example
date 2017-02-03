@@ -8,7 +8,7 @@ import scala.util.{Failure, Success}
 import scalatags.JsDom.all._
 
 /**
-  * A minimal binding between Scala.Rx and Scalatags and Scala-Js-Dom
+  * A minimal binding between Scala.Rx and ScalaTags and Scala-Js-Dom
   */
 object Framework {
 
@@ -16,9 +16,7 @@ object Framework {
     * Wraps reactive strings in spans, so they can be referenced/replaced
     * when the Rx changes.
     */
-  implicit def RxStr[T](r: Rx[T])(implicit f: T => Frag, ctx: Ctx.Owner): Frag = {
-    rxMod(Rx(span(r())))
-  }
+  implicit def RxStr[T](r: Rx[T])(implicit f: T => Frag, ctx: Ctx.Owner): Frag = rxMod(Rx(span(r())))
 
   /**
     * Sticks some Rx into a Scalatags fragment, which means hooking up an Obs

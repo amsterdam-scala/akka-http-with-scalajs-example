@@ -1,7 +1,6 @@
 package example
 
 import autowire._
-import japgolly.scalajs.react.ReactDOM
 import org.scalajs.dom
 import upickle.Js
 import upickle.default.{Reader, Writer, readJs, writeJs}
@@ -21,6 +20,8 @@ object App extends JSApp {
 
   def addTodo(taskWithoutId: String): Future[Task0] =
     client[Api].createTodo(Task0(None, taskWithoutId, done = false)).call()
+
+  def remTodo(task : Task0): Future[Task0] = client[Api].deleteTodo(task).call()
 
   def allTodos(): Future[Iterable[Task0]] = client[Api].allTodo0().call()
 

@@ -12,6 +12,7 @@ trait Model {
   import Ctx.Owner.Unsafe._
 
   val tasks = Var(Seq[Task0]())
+  val notDone = Rx {tasks().size - done()}
   val done = Rx {tasks().count(_.done)}
   val editing: Var[Option[Task0]] = Var(None)
   val filter = Var("All")
@@ -19,13 +20,11 @@ trait Model {
 
   def clearCompletedTasks = ???
 
-  def delete(task: Task0)(implicit ctx: Ctx.Data) = tasks() = tasks().filter(_ != task)
+  def delete(task: Task0)(implicit ctx: Ctx.Data): Unit = tasks() = tasks().filter(_ != task)
 
-  def notDone = Rx {
-    tasks().size - done()
-  }
+  def init(tsks: Iterable[Task0]): Unit = tasks() = tsks.toSeq
 
-  def create(desc: Task0) = tasks() = desc +: tasks.now
+  def create(desc: Task0): Unit = tasks() = desc +: tasks.now
 }
 
 @JSExport
@@ -55,7 +54,7 @@ object TodoJS extends Model {
       form(
         inputBox,
         onsubmit := { () =>
-          App.addTodo(inputBox.value).map(create(_))
+          App.addTodo(inputBox.value).map(create)
           inputBox.value = ""
           false
         }
@@ -70,9 +69,7 @@ object TodoJS extends Model {
             val inputRef = input(`class` := "edit", value := task.txt).render
 
             li(
-              `class` := Rx {
-                if (task.done) "completed" else if (editing().contains(task)) "editing" else ""
-              },
+              `class` := Rx {if (task.done) "completed" else if (editing().contains(task)) "editing" else ""},
               div(`class` := "view")(
                 ondblclick := { () =>
                   editing() = Some(task)
@@ -81,7 +78,9 @@ object TodoJS extends Model {
                   `class` := "toggle",
                   `type` := "checkbox",
                   cursor := "pointer",
-                  onchange := { () => {/*task = !task.done*/}
+                  onchange := { () => {
+                    /*task = !task.done*/
+                  }
                   },
                   if (task.done) checked := true
                 ),
@@ -89,12 +88,14 @@ object TodoJS extends Model {
                   button(
                     `class` := "destroy",
                     cursor := "pointer",
-                    onclick := { () => delete(task) }
+                    onclick := { () => App.remTodo(task).map(delete) }
                   )
                 ),
                 form(
                   onsubmit := { () =>
-                    // task.txt() = inputRef.value
+                    task.copy(txt = inputRef.value)
+
+                    //task.txt = inputRef.value
                     editing() = None
                     false
                   },
@@ -144,7 +145,8 @@ object TodoJS extends Model {
     }
 
 
-    App.allTodos().map(r => tasks() = r.toSeq)
+    App.allTodos().map(init)
+
     jQuery("body").append(section(id := "todoapp",
       templateHeader,
       templateBody,

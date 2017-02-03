@@ -24,16 +24,13 @@ trait ApiService {
 
 object ApiImpl extends Api {
 
-  def allTodo0(): Seq[Task0] = TaskStore.selectAll
+  def allTodo0(): Seq[Task0] = TaskStore.selectAll.reverse
 
-  def createTodo(task0: Task0): Task0 = {
-    println(task0)
-    task0}
+  def createTodo(taskWithoutId: Task0): Task0 = TaskStore.create(taskWithoutId)
 
   def update(task: Task0): Task0 = ???
 
-  def delete(ids: String): Seq[Task0] = Nil
-
+  def deleteTodo(itemToDelete: Task0): Task0 = TaskStore.delete(itemToDelete)
 
   def clearCompletedTasks(): Seq[Task0] = Nil
 

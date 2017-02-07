@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+<head>
+    <meta charset=UTF-8>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name=description
+          content="Akka HTTP RESTless Web App with react, bootstrap as a sbt-web-scalajs project with webjars">
+    <meta name=author content="FvdB">
+    <meta name=generator content="Scala.js Scalatags">
+    <meta name=versionId content="2017-01">
+
+    <title>RESTless webapp Akka HTTP, react</title>
+    <link rel=apple-touch-icon href="/img/apple-touch-icon.png">
+    <!-- Place favicon.ico in the img directory -->
+    <link rel=icon type="image/x-icon" href="/img/favicon.ico">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" media="screen" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Custom styles for this page -->
+    <link rel=stylesheet media="screen" href="/css/main.css">
+</head>
+
+<body>
+<!--[if lt IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">
+    upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <img src="/img/akka512.png" width="42" height="42" title="Akka HTTP">
+            <img src="/img/logo-React.svg" width="42" height="42" title=" Facebook's React">
+            <img src="/img/api-graphic.jpg" width="42" height="42" title="RESTless web service">
+            <img src="/img/logo-Bootstrap.svg" width="42" height="42" title="Twitter Bootstrap">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Akka HTTP RESTless web app</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://www.scala-lang.org/" target="_blank">Scala</a></li>
+                <li><a href="http://www.scala-js.org/" target="_blank">Scala.js</a></li>
+                <li><a href="http://doc.akka.io/docs/akka-http/10.0.1/scala/http/introduction.html" target="_blank">Akka
+                    HTTP</a></li>
+            </ul>
+            <form class="navbar-form navbar-right" action="https://github.com/search" method="GET" target="_blank">
+                <input type="hidden" name="nwo" value="amsterdam-scala/akka-http-with-scalajs-example"/>
+                <input type="hidden" name="search_target" value="repository"/>
+                <input type="hidden" name="ref" value="cmdform"/>
+                <input type="text" name="q" class="form-control" placeholder="Search GitHub…"/>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li id="home-page"><a href="/">Hello!</a></li>
+                <li class="menu"><a href="/en/todos"><strike>Reactive</strike> TodoMVC</a></li>
+                <li class="menu"><a href="/en/hangman"><strike>Reactive</strike> Hangman</a></li>
+                <li class="menu"><a href="/en/upload">HTML5 File Upload</a></li>
+                <li class="menu"><a href="/en/chat">Server Push Chat</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-2 col-md-10 col-md-offset-1 main">
+            <div class="container">
+            <h1 class="page-header">ToDoMVC</h1>
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="input-group input-group-lg">
+                  <span class="input-group-addon">
+                    <input class="toggle" type="checkbox">
+                  </span>
+                            <form>
+                                <input class="edit form-control input-lg">
+                            </form>
+                            <span class="input-group-btn">
+                    <button class="btn btn-default btn-lg destroy"><i class="glyphicon glyphicon-remove"></i></button>
+                  </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+
+                </div><!-- /row -->
+
+                <div class="row">
+
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="input-group input-group-lg">
+                  <span class="input-group-btn">
+                    <button class="btn btn-success btn-lg"><i class="fa fa-chevron-right"></i></button>
+                  </span>
+                            <form id="todo-form" >
+                                <input class="form-control input-lg" id="new-todo" placeholder="What needs to be done?">
+                            </form>
+                            <span class="input-group-btn">
+                    <button class="btn btn-default btn-lg" ><i class="glyphicon glyphicon-plus"></i></button>
+                  </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+
+                </div><!-- /row -->
+
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <hr><!-- /divider -->
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-2">
+
+                        <button class="btn btn-default btn-lg" id="toggle-all" ><i class="fa fa-check"></i></button>
+                        Mark all as complete
+                    </div>
+                    <div class="col-sm-4 text-right">
+
+                    </div>
+                </div><!-- /row -->
+
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <hr><!-- /divider -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2 col-sm-offset-2  text-center">
+                <span id="todo-count"><strong>{{remainingCount}}</strong></span>
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <ul class="list-inline" id="filters">
+                            <li>
+                                <a class="btn btn-sm" href="#/">All</a>
+                            </li>
+                            <li>
+                                <a class="btn btn-sm" href="#/active">Active <span class="badge badge-info">{{remainingCount}}</span></a>
+                            </li>
+                            <li>
+                                <a class="btn btn-sm" href="#/completed">Completed</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-2  text-center">
+                        <button class="btn btn-sm btn-success" id="clear-completed">Clear completed</button>
+                    </div>
+
+                </div><!--/ row -->
+
+
+                <hr>
+
+                <h4 class="text-center">
+                    Thanks <a href="http://todomvc.com/">TodoMVC</a>. Bootstrap by <a href="http://bootply.com/127322">Bootply</a>.
+                </h4>
+
+                <hr>
+
+            </div><!--/ app -->
+        </div><!--/ container -->
+        <div id="root">
+            </div>
+    </div>
+
+
+
+<!-- Include JavaScript dependencies e.g. jQuery.js -->
+<script type="text/javascript" src="/js/main-jsdeps.js"></script>
+<!-- Include Scala.js compiled code -->
+<script type="text/javascript" src="/js/main-fastopt.js"></script>
+<!-- Run JSApp -->
+<script type="text/javascript" src="/js/main-launcher.js"></script>
+</body>
+</html>

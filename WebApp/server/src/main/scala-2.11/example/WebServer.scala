@@ -17,6 +17,9 @@ trait Routing extends Directives with ApiService with ServiceContext {
         } /*just to check */ ~
         pathPrefix("en" / Remaining) {
           case "todos" => encodeResponse(getFromResource("public/en/todo.html"))
+          case "hangman" => encodeResponse(getFromResource("public/en/hangman.html"))
+          case "upload" => encodeResponse(getFromResource("public/en/upload.html"))
+          case "chat" => encodeResponse(getFromResource("public/en/chat.html"))
           case file:String  =>
           // optionally compresses the response with Gzip or Deflate
           // if the client accepts compressed responses

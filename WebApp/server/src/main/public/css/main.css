@@ -1,4 +1,4 @@
-/*
+/* <!-- CSS code from Bootply.com editor -->
  * Base structure
  */
 
@@ -6,7 +6,6 @@
 body {
   padding-top: 50px;
 }
-
 
 /*
  * Global add-ons
@@ -17,13 +16,6 @@ body {
   border-bottom: 1px solid #eee;
 }
 
-/*
- * Top navigation
- * Hide default border to remove 1px line.
- */
-.navbar-fixed-top {
-  border: 0;
-}
 
 /*
  * Sidebar
@@ -50,8 +42,8 @@ body {
 }
 
 /* Sidebar navigation */
-/*.nav-sidebar {
-  margin-right: -21px; *//* 20px padding + 1px border *//*
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
   margin-bottom: 20px;
   margin-left: -20px;
 }
@@ -59,19 +51,16 @@ body {
   padding-right: 20px;
   padding-left: 20px;
 }
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
+.nav-sidebar > .active > a {
   color: #fff;
   background-color: #428bca;
-}*/
+}
 
 
 /*
  * Main content
  */
 
-/*
 .main {
   padding: 20px;
 }
@@ -84,14 +73,12 @@ body {
 .main .page-header {
   margin-top: 0;
 }
-*/
 
 
 /*
  * Placeholder dashboard ideas
  */
 
-/*
 .placeholders {
   margin-bottom: 30px;
   text-align: center;
@@ -107,8 +94,10 @@ body {
   border-radius: 50%;
 }
 
-.boxsizing-border {
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-}*/
+/* custom sidebar width on big screens */
+
+@media (min-width: 992px){
+ .sidebar {
+   max-width:250px;
+ }
+}

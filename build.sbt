@@ -6,22 +6,23 @@ val commonSettings = Seq(
       organizationName := "Amsterdam.scala Meetup Group",
   organizationHomepage := Some(url("http://www.meetup.com/amsterdam-scala/")),
               homepage := Some(url("http://github.com/amsterdam-scala/akka-http-with-scalajs-example")),
-             startYear := Some(2016),
+             startYear := Some(2017),
 licenses += "EUPL-1.1" -> url("http://joinup.ec.europa.eu/community/eupl/og_page/european-union-public-licence-eupl-v11"),
 
           scalaVersion := scalaV,
   libraryDependencies ++= Seq(
      "com.lihaoyi" %%% "autowire" % autowireV,
-     "com.lihaoyi" %%% "scalarx" % "0.3.2",
-     "com.lihaoyi" %%% "upickle"  % upickleV
-))
+     "com.lihaoyi" %%% "scalarx"  % "0.3.2",
+     "com.lihaoyi" %%% "upickle"  % upickleV,
+     "com.lihaoyi" %%% "scalatags" % "0.6.3"
+  ))
 
 lazy val akkaHttpV   = "10.0.3"
      val autowireV   = "0.2.6"
 lazy val reactV      = "15.4.2"
 lazy val scaJSreactV = "0.11.3"
 lazy val scalaDomV   = "0.9.1"
-     val scalaV      = "2.11.8"
+     val scalaV      = "2.12.1"
      val upickleV    = "0.4.4"
 lazy val webAppDir   = "WebApp"
 
@@ -41,11 +42,10 @@ lazy val client = (project in file(webAppDir + "/client")).settings(
   libraryDependencies ++= Seq(
     "be.doeraene" %%% "scalajs-jquery" % "0.9.1",
     "com.github.japgolly.scalajs-react" %%% "core"        % scaJSreactV,
-    "com.github.karasiq"                %%% "scalajs-bootstrap" % "1.1.2",
+    "com.github.karasiq"                %%% "scalajs-bootstrap" % "1.1.4"
 //  "com.github.japgolly.scalajs-react" %%% "ext-monocle" % scaJSreactV,
 //  "com.github.japgolly.scalajs-react" %%% "ext-scalaz72"% scaJSreactV,
 //  "com.github.japgolly.scalajs-react" %%% "extra"       % scaJSreactV,
-    "org.scala-js"                      %%% "scalajs-dom" % scalaDomV
   ),
   // KEEP THIS normalizedName CONSTANTLY THE SAME, otherwise the outputted JS filename will be changed.
   normalizedName := "main",

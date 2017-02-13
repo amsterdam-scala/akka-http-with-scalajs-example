@@ -60,7 +60,7 @@ object TestPageAssets {
         meta(name := "generator", content := "Scala.js Scalatags"),
         meta(name := "versionId", content := "2017-01"),
 
-        scalatags.Text.tags2.title("RESTless web app Akka HTTP"),
+        scalatags.Text.tags2.title("Akka HTTP RESTless web app"),
         link(rel := "apple-touch-icon", href := "/img/apple-touch-icon.png"),
         link(rel := "icon", `type` := "image/x-icon", href := "/img/favicon.ico"),
 
@@ -75,7 +75,7 @@ object TestPageAssets {
           href := "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
           media := "screen", rel := "stylesheet"),
         //Custom styles for this page
-        link(rel := "stylesheet", href := "/css/main.css", media := "screen"),
+        //link(rel := "stylesheet", href := "/css/main.css", media := "screen"),
 
         scalatags.Text.tags2.style(raw(styleText))
       ),

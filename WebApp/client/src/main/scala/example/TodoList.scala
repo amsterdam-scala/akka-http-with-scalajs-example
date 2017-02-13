@@ -73,7 +73,7 @@ final class TodoList(implicit ctx: Ctx.Owner) extends BootstrapHtmlComponent[dom
         Seq[Modifier](todoTitle, GridSystem.col(10), onclick := Bootstrap.jsClick(_ ⇒ i.update(i.now.copy(completed = !i.now.completed)))),
         Seq[Modifier](buttons, GridSystem.col(2), textAlign.center)
       ),
-      Rx[AutoModifier](`class` := {
+      Rx[AutoModifier](cls := {
         if (i().completed) "" else i().priority.style.styleClass.getOrElse("")
       })
     )

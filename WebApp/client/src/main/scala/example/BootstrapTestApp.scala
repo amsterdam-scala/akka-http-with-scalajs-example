@@ -15,14 +15,11 @@ import scala.scalajs.js.timers._
 import scalatags.JsDom.all._
 
 @JSExport
-object BootstrapTestApp /*extends JSApp*/ {
+object BootstrapTestApp extends JSApp {
   private implicit val context = implicitly[Ctx.Owner] // Stops working if moved to main(), macro magic
 
-  def main0(): Unit = {
+  def main(): Unit = {
     jQuery(() ⇒ {
-      // Table tab will appear after 3 seconds
-      val tableVisible = Var(false)
-      val tabTitle = Var("Wait...")
 
       val navigationBar = NavigationBar()
         .withBrand("Scala.js Bootstrap Test", href := "http://getbootstrap.com/components/#navbar")
@@ -35,16 +32,12 @@ object BootstrapTestApp /*extends JSApp*/ {
         .withStyles(NavigationBarStyle.inverse, NavigationBarStyle.fixedTop)
         .build()
 
-      setInterval(3000)({
-        tableVisible.update(true)
-        setInterval(1000)(tabTitle() = "Table")
-      })
       // Render page
       navigationBar.applyTo(dom.document.body)
 
       // Reactive navbar test
       //      navigationBar.addTabs(NavigationTab("Buttons", "buttons", "log-in", new TestPanel("Serious business panel", PanelStyle.warning)))
-      navigationBar.selectTab(1)
+      navigationBar.selectTab(0)
     })
   }
 }

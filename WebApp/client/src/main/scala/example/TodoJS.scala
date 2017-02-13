@@ -69,16 +69,16 @@ object TodoJS extends Model {
       def partList = Rx {
         ul(id := "todo-list")(
           for (task <- tasks() if filters(filter())(task)) yield {
-            val inputRef = input(`class` := "edit", value := task.txt).render
+            val inputRef = input(cls := "edit", value := task.txt).render
 
             li(
-              `class` := Rx {if (task.done) "completed" else if (editing().isDefined) "editing" else ""},
-              div(`class` := "view")(
+              cls := Rx {if (task.done) "completed" else if (editing().isDefined) "editing" else ""},
+              div(cls := "view")(
                 ondblclick := { () =>
                   editing() = Some(task)
                 },
                 input(
-                  `class` := "toggle",
+                  cls := "toggle",
                   `type` := "checkbox",
                   cursor := "pointer",
                   onchange := { () => {
@@ -89,7 +89,7 @@ object TodoJS extends Model {
                 ),
                 label(task.txt),
                   button(
-                    `class` := "destroy",
+                    cls := "destroy",
                     cursor := "pointer",
                     onclick := { () => App.remTodo(task).map(delete)}
                   )
@@ -114,7 +114,7 @@ object TodoJS extends Model {
         ul(id := "filters")(
           for (name <- filters.keys.toSeq) yield
             li(a(
-              `class` := Rx {
+              cls := Rx {
                 if (name == filter()) "selected" else ""
               },
               name,

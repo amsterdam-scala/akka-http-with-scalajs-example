@@ -41,6 +41,9 @@ object TestPageAssets {
         |#main-container {
         |    margin-top: 50px;
         |}
+        |.navbar-brand {
+        |    padding: 4px;
+        |    }
       """.stripMargin.split('\n').map(_.trim.filter(_ >= ' ')).mkString
     }
 

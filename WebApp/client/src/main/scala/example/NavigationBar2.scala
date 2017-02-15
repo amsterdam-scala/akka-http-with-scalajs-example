@@ -17,8 +17,8 @@ import scalatags.JsDom.all._
 final class NavigationBar2(barId: String,
                            brand: Modifier,
                            styles: Seq[NavigationBarStyle],
-                           elemLeft: Seq[Modifier],
-                           elemRight : Seq[Modifier],
+                           elemsLeft: Seq[Modifier],
+                           elemsRight: Seq[Modifier],
                            container: Modifier ⇒ Modifier,
                            contentContainer: Modifier ⇒ Modifier)
                           (implicit ctx: Ctx.Owner) extends BootstrapComponent {
@@ -42,14 +42,6 @@ final class NavigationBar2(barId: String,
       for (tab <- tabs) yield renderTab(active = tab == tabs.head, tab)
     )
   }
-
-  def navbarRight (links : Modifier*) =
-    {ul(cls := "nav navbar-nav navbar-right")(
-      for (link <- links) yield li(link)
-    )
-
-    }
-
   private val tabContentContainer = Rx {
     def renderContent(active: Boolean, tab: NavigationTab): Tag = {
       div(id := s"$barId-${tab.id}-tab", role := "tabpanel", `class` := (if (active) "tab-pane active fade in" else "tab-pane fade"))(
@@ -111,7 +103,7 @@ final class NavigationBar2(barId: String,
       container(Seq(
         // Header
         div(`class` := "navbar-header")(
-          elemLeft,
+          elemsLeft,
           button(`type` := "button", `data-toggle` := "collapse", `data-target` := s"#$barId", `class` := "navbar-toggle collapsed")(
             span(`class` := "sr-only", "Toggle navigation"),
             span(`class` := "icon-bar"),
@@ -120,9 +112,16 @@ final class NavigationBar2(barId: String,
           ),
           a(href := "#", `class` := "navbar-brand", brand)
         ),
-        div(id := barId, `class` := "navbar-collapse collapse")(tabContainer, navbarRight(elemRight))
+        div(id := barId, `class` := "navbar-collapse collapse")(navbarRight(elemsRight: _*), tabContainer)
       ))
     )
+  }
+
+  private def navbarRight(links: Modifier*) = {
+    ul(cls := "nav navbar-nav navbar-right")(
+      for (link <- links) yield li(link)
+    )
+
   }
 
   def content: Modifier = {
@@ -150,6 +149,7 @@ case class NavigationBarBuilder2(tabs: Seq[NavigationTab],
   def withContentContainer(contentContainer: Modifier ⇒ Modifier) = copy(contentContainer = contentContainer)
 
   def withElementsLeft(elements: Modifier*) = copy(elemLeft = elements)
+
   def withElementsRight(elements: Modifier*) = copy(elemRight = elements)
 
   def withId(id: String) = copy(barId = id)

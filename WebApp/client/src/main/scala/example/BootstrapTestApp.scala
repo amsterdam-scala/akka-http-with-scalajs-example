@@ -45,9 +45,10 @@ object BootstrapTestApp extends JSApp {
         .withContentContainer(content ⇒ GridSystem.container(id := "main-container", GridSystem.mkRow(content)))
         .withStyles(NavigationBarStyle.inverse, NavigationBarStyle.fixedTop)
         .withElementsRight(
-          a(href := "http://www.scala-lang.org/", target := "_blank", "Scala"),
-          a(href := "http://www.scala-js.org/", target := "_blank")("Scala.js"),
-          a(href := "http://doc.akka.io/docs/akka-http/10.0.1/scala/http/introduction.html", target := "_blank", "Akka HTTP"))
+          a(*.paddingLeft:= 0)(href := "http://www.scala-lang.org/", target := "_blank", "Scala"),
+          a(href := "http://www.scala-js.org/", target := "_blank", *.paddingLeft:= 0)("Scala.js"),
+          a(href := "http://doc.akka.io/docs/akka-http/10.0.1/scala/http/introduction.html", target := "_blank",  *.paddingLeft:= 0)
+          ("Akka HTTP"))
         .build()
     }
 

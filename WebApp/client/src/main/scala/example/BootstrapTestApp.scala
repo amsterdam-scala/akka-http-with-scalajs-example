@@ -45,10 +45,16 @@ object BootstrapTestApp extends JSApp {
         .withContentContainer(content ⇒ GridSystem.container(id := "main-container", GridSystem.mkRow(content)))
         .withStyles(NavigationBarStyle.inverse, NavigationBarStyle.fixedTop)
         .withElementsRight(
-          a(*.paddingLeft:= 0)(href := "http://www.scala-lang.org/", target := "_blank", "Scala"),
-          a(href := "http://www.scala-js.org/", target := "_blank", *.paddingLeft:= 0)("Scala.js"),
-          a(href := "http://doc.akka.io/docs/akka-http/10.0.1/scala/http/introduction.html", target := "_blank",  *.paddingLeft:= 0)
-          ("Akka HTTP"))
+          form(action := "https://github.com/search", cls := "navbar-form navbar-right", method := "GET", target := "_blank")
+          (input(`type` := "hidden", name := "nwo", value := "amsterdam-scala/akka-http-with-scalajs-example")
+            , input(name := "search_target", `type` := "hidden", value := "repository")
+            , input(name := "ref", `type` := "hidden", value := "cmdform")
+            , input(cls := "form-control", name := "q", placeholder := "Search GitHub…", `type` := "text")),
+          a(*.paddingRight := 0, href := "http://www.scala-lang.org/", target := "_blank")("Scala")
+          , a(*.paddingRight := 0, href := "http://www.scala-js.org/", target := "_blank")("Scala.js")
+          , a(*.paddingRight := 0, href := "http://doc.akka.io/docs/akka-http/10.0.1/scala/http/introduction.html", target := "_blank")
+          ("Akka HTTP")
+        )
         .build()
     }
 

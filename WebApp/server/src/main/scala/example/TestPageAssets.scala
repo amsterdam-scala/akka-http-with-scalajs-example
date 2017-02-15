@@ -13,20 +13,7 @@ object TestPageAssets {
       """
         |#main-container {
         |    padding: 20px;
-        |}
-        |
-        |@media (min-width: 768px) {
-        |    #main-container {
-        |        max-width: 80%;
-        |    }
-        |}
-        |
-        |td.buttons {
-        |    text-align: center;
-        |}
-        |
-        |.panel-primary .panel-head-buttons .glyphicon {
-        |    color: white;
+        |    margin-top: 50px;
         |}
         |
         |.glyphicon {
@@ -34,16 +21,26 @@ object TestPageAssets {
         |    margin-right: 2px;
         |}
         |
+        |.navbar-brand {
+        |    padding: 4px;
+        |}
+        |
+        |.panel-primary .panel-head-buttons .glyphicon {
+        |    color: white;
+        |}
+        |
         |.panel-title .glyphicon {
         |    margin-right: 10px;
         |}
         |
-        |#main-container {
-        |    margin-top: 50px;
+        |@media (min-width: 768px) {
+        |    #main-container {
+        |        max-width: 80%;
         |}
-        |.navbar-brand {
-        |    padding: 4px;
-        |    }
+        |
+        |td.buttons {
+        |    text-align: center;
+        |}
       """.stripMargin.split('\n').map(_.trim.filter(_ >= ' ')).mkString
     }
 
